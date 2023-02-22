@@ -2,4 +2,4 @@
 记录一下面试题
 
 - Java
-  - [Java基础](https://github.com/FTBoojux/myMark/tree/main/Java/threadAndCurrency) 
+  - [多线程与高并发](https://github.com/FTBoojux/myMark/tree/main/Java/threadAndCurrency) 
