@@ -47,3 +47,23 @@ ABA问题是一种在多线程编程中可能出现的问题，它指的是在�
 ?
 
 如果在 **`CountDownLatch`** 中某个任务失败了，即某个任务的线程抛出了异常，可以考虑将该异常保存下来，并在其他线程中检查它。一种实现方式是使用一个 **`AtomicReference`\**对象保存异常，每个线程检查该对象是否为\**`null`**，如果不为 **`null`**，则说明其他线程中有一个任务失败了，需要将异常重新抛出。
+
+### 7、Java线程池的参数
+
+Java中的线程池有以下几个参数：
+
+1. `corePoolSize`：线程池的核心线程数，即线程池维护的最小线程数；
+2. `maximumPoolSize`：线程池的最大线程数，即线程池允许的最大线程数；
+3. `keepAliveTime`：线程池中线程空闲后的存活时间；
+4. `unit`：`keepAliveTime` 的时间单位；
+5. `workQueue`：用于保存等待执行的任务的阻塞队列；
+6. `threadFactory`：用于创建线程的工厂类；
+7. `handler`：拒绝策略，用于当任务添加到线程池中被拒绝时的处理方式。
+
+其中，`corePoolSize`、`maximumPoolSize`、`keepAliveTime`、`unit` 和 `workQueue` 是线程池的核心参数，`threadFactory` 和 `handler` 是可选参数。
+
+- `corePoolSize` 和 `maximumPoolSize` 一般需要根据业务场景和系统资源限制来确定，可以使用 `Runtime.getRuntime().availableProcessors()` 获取当前系统的 CPU 核心数作为默认值。
+- `keepAliveTime` 和 `unit` 决定了线程池中的非核心线程空闲后的存活时间。
+- `workQueue` 决定了线程池中等待执行的任务的队列类型和大小。
+- `threadFactory` 可以指定线程创建的方式，例如使用自定义线程名称、线程优先级等。
+- `handler` 可以指定线程池中的任务被拒绝后的处理方式，例如抛出异常、直接丢弃等。常用的拒绝策略有 `AbortPolicy`、`CallerRunsPolicy`、`DiscardPolicy` 和 `DiscardOldestPolicy`。
