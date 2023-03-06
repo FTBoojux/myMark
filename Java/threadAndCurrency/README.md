@@ -67,3 +67,22 @@ Java中的线程池有以下几个参数：
 - `workQueue` 决定了线程池中等待执行的任务的队列类型和大小。
 - `threadFactory` 可以指定线程创建的方式，例如使用自定义线程名称、线程优先级等。
 - `handler` 可以指定线程池中的任务被拒绝后的处理方式，例如抛出异常、直接丢弃等。常用的拒绝策略有 `AbortPolicy`、`CallerRunsPolicy`、`DiscardPolicy` 和 `DiscardOldestPolicy`。
+
+### 8、线程池有哪些拒绝策略
+
+Java中的线程池有以下四种拒绝策略：
+
+1. CallerRunsPolicy（调用者运行策略）：该策略下，线程池会直接在execute方法的调用线程中执行该任务。
+2. AbortPolicy（中止策略）：该策略下，线程池会抛出RejectedExecutionException异常来拒绝新任务的提交。
+3. DiscardPolicy（抛弃策略）：该策略下，线程池会默默地丢弃无法处理的任务，不会有任何异常抛出。
+4. DiscardOldestPolicy（抛弃旧任务策略）：该策略下，线程池会丢弃队列中最老的任务，尝试重新提交当前任务。
+
+### 9、线程池的拒绝策略的应用场景
+
+这些拒绝策略的应用场景如下：
+
+1. AbortPolicy适用于任务量比较小，但是突然间会出现大量任务的情况。
+2. CallerRunsPolicy适用于任务处理能力比较强，可以在短时间内处理完任务，但是突然间出现大量任务的情况。
+3. DiscardPolicy适用于对任务处理结果不敏感，可以直接忽略任务。
+4. DiscardOldestPolicy适用于任务量比较大，但是任务处理能力比较弱，无法同时处理所有任务，需要优先处理最新提交的任务。
+
