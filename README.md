@@ -1,5 +1,5 @@
 # myMark
-记录一下面试题，有很多答案用ai的，可能有误
+记录一下面试题，有很多答案用ai的，可能有误.
 
 - Java
   - [基础](https://github.com/FTBoojux/myMark/tree/main/Java/basic)
