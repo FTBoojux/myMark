@@ -15,3 +15,37 @@
 7. 将结果存储在一个新文件中。
 
 需要注意的是，在实际的实现过程中，还需要考虑一些细节问题，例如如何处理相同的元素、如何处理小文件中重复的元素等等。
+
+### 2、redis统计浏览量
+
+将当前页面的 URL 作为 Redis 的 key，浏览量作为 value，可以实现简单的浏览量统计功能。但是，在高并发的情况下，每次访问都更新 value 值会导致 Redis 的性能瓶颈，因此需要使用 Redis 的高性能数据结构 HyperLogLog 和 Redis 的计数器命令 incrby，来实现浏览量的统计。
+
+HyperLogLog 是 Redis 中的一种基数统计算法，用于统计不重复元素的个数，其空间占用量极小，但是误差率可控。HyperLogLog 适合用于统计海量数据中的不重复元素个数，如网站的 UV、PV 等。
+
+在实现浏览量的统计时，可以将每个页面的 URL 作为 HyperLogLog 的 key，每个用户的 IP 或者用户 ID 作为 HyperLogLog 的 value，这样就可以统计出每个页面的不重复访问人数，即 UV。
+
+同时，还可以使用 Redis 的计数器命令 incrby 实现对每个页面的浏览量的统计，将每个页面的 URL 作为 key，每次访问时使用 incrby 命令对 value 进行自增操作，即可统计出每个页面的浏览量，即 PV。
+
+HyperLogLog补充：
+
+HyperLogLog 算法是一种基数统计算法，可以对数据进行高效地去重统计，并且误差率可控。在使用 HyperLogLog 统计 UV 数量时，可以将每个页面的 URL 作为 HyperLogLog 的 key，将每个访问者的 IP 或者用户 ID 作为 HyperLogLog 的 value，这样就可以统计出每个页面的不重复访问人数，即 UV。
+
+具体实现步骤如下：
+
+1. 在 Redis 中使用 HyperLogLog 命令创建一个 HyperLogLog 对象。
+
+   ```shell
+   PFADD url:pv:2022-03-01 ip1 ip2 ...
+   ```
+
+   其中，url:pv:2022-03-01 是 HyperLogLog 对象的 key，ip1、ip2 等是访问该页面的不同 IP 地址。HyperLogLog 对象会自动去重，只会统计不同的 IP 地址。
+
+2. 每次有用户访问页面时，使用 HyperLogLog 命令将该用户的 IP 地址加入 HyperLogLog 对象中。
+
+   ```shell
+   PFADD url:pv:2022-03-01 ip3
+   ```
+
+   这样就可以统计出每个页面的不重复访问人数，即 UV。
+
+需要注意的是，HyperLogLog 算法的误差率可控，但是误差率越小，所需的空间也越大，因此需要根据具体场景选择合适的误差率和空间占用量。另外，HyperLogLog 算法不支持删除操作，因此无法实现对某个用户的去重，只能统计整个页面的 UV 数量。
