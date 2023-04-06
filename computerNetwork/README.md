@@ -8,3 +8,18 @@ TCP（Transmission Control Protocol）是一种面向连接的协议，它提供
 UDP（User Datagram Protocol）是一种无连接协议，它不保证数据传输的可靠性和顺序性，也没有拥塞控制和流量控制的机制。UDP直接将数据包发送到目的地址，不需要建立连接和维护状态，因此开销比TCP小，速度也比TCP快。UDP适合于对数据传输效率要求比较高、但对数据准确性和可靠性要求不高的应用，如视频会议、流媒体等。
 
 总的来说，TCP适合传输需要保证可靠性的数据，UDP适合传输对实时性要求较高的数据。
+
+### 2、常见的http状态码
+
+- 200 OK：请求成功。
+- 201 Created：已创建成功。
+- 204 No Content：请求成功，但没有返回内容。
+- 301 Moved Permanently：请求的资源已被永久移动到新的URL，响应中应该包含新的URL地址。
+- 302 Found：请求的资源临时移动到新的URL，响应中应该包含新的URL地址。
+- 304 Not Modified：资源未修改，可以使用缓存。
+- 400 Bad Request：请求无法被服务器理解。
+- 401 Unauthorized：请求未经授权。
+- 403 Forbidden：请求被服务器拒绝。
+- 404 Not Found：请求的资源不存在。
+- 500 Internal Server Error：服务器内部错误。
+- 502 Bad Gateway：作为代理或网关的服务器尝试执行请求时，从远程服务器接收到无效的响应。
