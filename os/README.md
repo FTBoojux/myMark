@@ -64,3 +64,17 @@ I/O复用模型（I/O Multiplexing）：应用程序通过select或poll等系统
 信号驱动式I/O模型（Signal Driven I/O）：应用程序通过信号来通知I/O操作完成，效率也比较高。
 
 异步I/O模型（Asynchronous I/O）：应用程序发起一个I/O操作后，继续执行其他操作，I/O操作完成后通过回调函数等方式通知应用程序，这种模型效率最高，但实现比较复杂，一般需要操作系统支持。
+
+### 8、AIO
+
+AIO（Asynchronous I/O），也叫 NIO.2，在 Java NIO 的基础上增加了异步非阻塞的 I/O 操作方式。与传统的同步阻塞 I/O 模型不同，AIO 通过回调函数的方式实现异步非阻塞的 I/O 操作，这样在 I/O 操作的同时，CPU 可以去处理其他的任务，提高了系统的并发性和吞吐量。
+
+AIO 采用了 CompletionHandler 和 AsynchronousChannelGroup 两个主要的接口来实现异步非阻塞 I/O。
+
+CompletionHandler 接口用于处理 I/O 事件的结果，其中定义了两个方法：
+
+completed：当 I/O 操作成功时，触发 completed 方法。
+failed：当 I/O 操作失败时，触发 failed 方法。
+AsynchronousChannelGroup 接口用于管理异步通道，并为它们提供事件处理程序池和共享资源。它可以为所有的异步通道提供统一的管理，并共享处理器和其他系统资源。
+
+与传统的同步阻塞 I/O 模型相比，AIO 模型可以提供更高的 I/O 吞吐量和更少的 CPU 使用率，适合于处理高并发、大量连接的场景。但 AIO 的实现需要更多的系统资源和编程复杂度，不适合所有的场景。
