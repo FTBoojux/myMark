@@ -15,3 +15,23 @@
 - 使用Bean：Bean已经初始化完毕，可以使用了。
 
 - 销毁Bean：当Bean不再被使用时，Spring容器会自动调用DisposableBean接口的destroy方法或在配置文件中通过destroy-method指定的销毁方法对Bean进行销毁。
+
+### 2、Spring代理的实现方式
+
+Spring的代理是通过JDK动态代理和CGLIB代理两种方式实现的。
+
+JDK动态代理
+JDK动态代理是Java原生支持的一种动态代理技术，它是通过反射机制来生成一个实现指定接口的代理类对象。Spring中的JDK动态代理主要应用于对接口的代理。
+
+JDK动态代理的实现流程大致如下：
+
+定义一个InvocationHandler接口的实现类，在实现类中实现对目标对象方法的增强逻辑。
+使用Proxy.newProxyInstance()方法生成目标对象的代理对象，同时将InvocationHandler接口的实现类作为参数传入。
+CGLIB代理
+CGLIB代理是通过生成目标类的子类来实现代理的，它可以代理没有实现接口的类。CGLIB代理的实现依赖于asm框架来生成字节码，并使用FastClass机制来调用代理方法，因此比JDK动态代理更快，但也更消耗内存。
+
+CGLIB代理的实现流程大致如下：
+
+定义一个MethodInterceptor接口的实现类，在实现类中实现对目标对象方法的增强逻辑。
+使用Enhancer类创建目标类的子类，同时将MethodInterceptor接口的实现类作为参数传入。
+需要注意的是，CGLIB代理只能代理非final类的非final方法，因为final方法无法被子类覆盖。
