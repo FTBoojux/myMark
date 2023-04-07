@@ -86,3 +86,14 @@ Java中的线程池有以下四种拒绝策略：
 3. DiscardPolicy适用于对任务处理结果不敏感，可以直接忽略任务。
 4. DiscardOldestPolicy适用于任务量比较大，但是任务处理能力比较弱，无法同时处理所有任务，需要优先处理最新提交的任务。
 
+### 10、Synchronized和ReentrantLock的底层区别和底层实现
+
+Synchronized和ReentrantLock都是Java中用于实现锁的机制，实现线程同步的关键字和类。它们都可以用于实现线程之间的互斥和协作，从而保证程序的正确性和可靠性。
+
+Synchronized是Java语言中内置的关键字，是最常用的实现锁机制的方法，它是基于JVM实现的，可以实现互斥锁和条件锁。在使用Synchronized时，锁的获取和释放都是由JVM自动完成的，因此它比较简单，容易使用。但是，它有一个缺点，即只能实现非公平锁。
+
+ReentrantLock是Java中的一个类，是基于AQS（AbstractQueuedSynchronizer）实现的。它提供了比Synchronized更高级别的功能，如可重入锁、可中断锁、公平锁和多条件变量等。它的实现比Synchronized复杂，但是它可以提供更多的灵活性和可扩展性，同时可以实现公平锁和非公平锁。
+
+在底层实现上，Synchronized是基于Java对象头中的mark word实现的。它的原理是在对象头中存储一个锁标志位，当线程获取锁时，会将该标志位置为1，表示当前对象已被锁定；当线程释放锁时，将该标志位重新设置为0，表示当前对象未被锁定。在Synchronized中，锁的获取和释放都是由JVM自动完成的，因此使用起来非常简单。
+
+ReentrantLock则是基于AQS实现的，它在内部维护了一个FIFO的等待队列，用于存储等待锁的线程。当线程获取锁失败时，会将其加入到等待队列中，并进行自旋等待或者挂起等待；当锁释放时，会从等待队列中取出一个线程进行唤醒。在ReentrantLock中，锁的获取和释放需要显式地调用lock和unlock方法，因此使用起来相对Synchronized更加复杂，但是它提供了更多的功能和更好的可扩展性。
