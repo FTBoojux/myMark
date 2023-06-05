@@ -41,3 +41,25 @@ MVCC（Multi-Version Concurrency Control）是指多版本并发控制，是数�
 在MVCC中，每个事务在执行时都会读取数据的一个快照，每个快照都有一个时间戳或者版本号，不同版本的数据会被存储在不同的地方。当一个事务要修改某个数据时，会将当前版本的数据复制一份作为修改前的备份，然后修改这份备份。这样，在同一时间，不同的事务可以看到不同版本的数据，不同版本的数据可以并存，互不影响。
 
 因此，在MVCC中，读取操作和修改操作可以并行执行，提高了并发性能，同时也保证了数据的一致性。
+
+### 6、MySQL如何给用户授权
+
+要给 MySQL 授权给一个用户，可以使用 GRANT 命令来进行授权操作。下面是一个简单的授权示例：
+
+```sql
+GRANT privileges ON database.table TO 'username'@'host' IDENTIFIED BY 'password';
+```
+
+其中，各个部分的含义如下：
+- `privileges`：指定授予的权限，可以是单个权限或多个权限的组合，例如 SELECT、INSERT、UPDATE、DELETE 等。
+- `database.table`：指定数据库和表，可以是具体的数据库和表名，或使用通配符 * 表示所有数据库和表。
+- `'username'@'host'`：指定用户名和主机名，用于标识用户。用户名可以是现有的用户或新创建的用户，主机名可以是具体的 IP 地址或主机名，也可以使用通配符 % 表示所有主机。
+- `IDENTIFIED BY 'password'`：指定用户的密码，用于进行身份验证。密码可以是明文密码或使用函数加密后的密码。
+
+例如，以下命令将授予用户 "myuser" 在数据库 "mydatabase" 的表 "mytable" 上的 SELECT 和 INSERT 权限：
+
+```sql
+GRANT SELECT, INSERT ON mydatabase.mytable TO 'myuser'@'localhost' IDENTIFIED BY 'mypassword';
+```
+
+授权成功后，用户将具有相应的权限来操作指定的数据库和表。
