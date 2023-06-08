@@ -35,3 +35,23 @@ CGLIB代理的实现流程大致如下：
 定义一个MethodInterceptor接口的实现类，在实现类中实现对目标对象方法的增强逻辑。
 使用Enhancer类创建目标类的子类，同时将MethodInterceptor接口的实现类作为参数传入。
 需要注意的是，CGLIB代理只能代理非final类的非final方法，因为final方法无法被子类覆盖。
+
+### 3、SpringBoot启动过程
+
+![img](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6ba8bf5c8177430b8f462f35948d1c74~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp?)
+
+Spring Boot的启动流程包括以下主要步骤：
+
+1. **创建SpringApplication对象**：SpringApplication是Spring Boot的核心类，负责启动Spring Boot应用。它会根据当前应用的类型（Web应用或非Web应用）做出一些默认设置。
+
+2. **运行SpringApplication**：执行SpringApplication的run方法开始启动Spring Boot应用。这个方法接收两个参数：应用的主配置类和命令行参数。
+
+3. **加载Spring Boot的自动配置类**：Spring Boot自动配置是其主要特性之一。Spring Boot有许多自动配置类，它们在应用启动时会自动被加载并应用。
+
+4. **创建并刷新Spring容器**：Spring Boot会创建一个ApplicationContext（应用上下文）实例，这个实例就是Spring的IoC容器。然后，Spring Boot会刷新这个容器，触发Bean的加载。
+
+5. **启动内嵌的Servlet容器**（如果是Web应用）：如果当前是一个Web应用，Spring Boot会启动一个内嵌的Servlet容器（默认是Tomcat）。
+
+6. **Spring Boot应用启动完成**：此时，Spring Boot应用已经启动完成，你的应用已经准备好接收请求了。
+
+以上是Spring Boot的启动流程的一种简化描述，实际的过程要复杂得多。例如，在创建和刷新Spring容器的过程中，Spring Boot会做许多额外的工作，如加载Bean定义，解析配置，创建Bean实例等等。
