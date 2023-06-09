@@ -66,3 +66,7 @@
 ### 7、Java中调用System.gc()一定能触发gc吗
 
 不一定。虽然System.gc()方法会建议JVM进行垃圾回收，但JVM是否真正执行垃圾回收，还是要看JVM的具体实现。JVM一般会自动管理内存，包括垃圾回收，开发人员不需要手动调用System.gc()方法。如果JVM在需要回收内存时决定不执行垃圾回收，那么调用System.gc()方法也不会起作用。
+
+### 8、synchronized关键字作用在方法上，class文件会有什么标识？
+
+在生成的class文件中，与同步方法相关的标识符是方法的访问修饰符（例如public、private等）之前的一个字节码指令。这个指令可以是ACC_SYNCHRONIZED，它表示方法是同步方法
